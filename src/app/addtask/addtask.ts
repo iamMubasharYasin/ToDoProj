@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-addtask',
@@ -8,6 +9,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './addtask.css',
 })
 export class Addtask {
+
+ constructor(private http: HttpClient) {}
 
   AddTaskForm = new FormGroup(
     {
@@ -18,8 +21,17 @@ export class Addtask {
   );
   onSubmit(): void
   {
-    console.log("Form Submitted");
-
-    console.log(this.AddTaskForm.value);
+    this.http.post('https://localhost:7269/api/ToDo/AddItems', this.AddTaskForm.value).subscribe(
+      {
+        next: (res)=>
+        {
+          console.log('Task added successfully');
+        },
+        error: (res)=>
+        {
+          console.error('Error adding task', +res);
+        }
+      }
+    );
   }
 }
