@@ -10,25 +10,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class Addtask {
 
- constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   AddTaskForm = new FormGroup(
     {
       Title: new FormControl(''),
-      Details : new FormControl(''),
-      Status : new FormControl('')
+      Details: new FormControl(''),
+      Status: new FormControl('')
     }
   );
-  onSubmit(): void
-  {
+  onSubmit(): void {
     this.http.post('https://localhost:7269/api/ToDo/AddItems', this.AddTaskForm.value).subscribe(
       {
-        next: (res)=>
-        {
+        next: (res) => {
           console.log('Task added successfully');
         },
-        error: (res)=>
-        {
+        error: (res) => {
           console.error('Error adding task', +res);
         }
       }
