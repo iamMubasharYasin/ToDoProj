@@ -1,47 +1,47 @@
 <div class="container-fluid p-4">
 
-    <h5>All Tasks</h5>
-    <!-- Add Task Button (Top Right) -->
-    <div class="d-flex justify-content-end mb-3">
-        <a href="/addtask" class="btn btn-primary">Add Task</a>
-    </div>
+  <h5>All Tasks</h5>
 
-    <!-- Table -->
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Details</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+  <!-- Add Task Button (Top Right) -->
+  <div class="d-flex justify-content-end mb-3">
+      <a href="/addtask" class="btn btn-primary">Add Task</a>
+  </div>
 
-            <tbody>
+  <!-- Table -->
+  <div class="table-responsive" style="min-height:200px;">
+      <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+              <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Details</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
 
-                <!-- Sample Row -->
-                @for(item of ListOfNotes; track  item.id)
-                {
-                <tr>
-                    <td>{{item.id}}</td>
-                    <td>{{item.title}}</td>
-                    <td>{{item.details}}</td>
-                    <td>{{item.isCompleted}}</td>
-                    <td>
-                        <a href="/edittask" class="btn btn-sm btn-warning m-2">Edit</a>
+        
+          <tbody>
+              <!-- Loop through notes -->
+              <tr *ngFor="let item of ListOfNotes">
+                  <td>{{item.id}}</td>
+                  <td>{{item.title}}</td>
+                  <td>{{item.details}}</td>
+                  <!--<td>{{item.isCompleted}}</td>-->
+                  <td>
+                    <span [ngClass]="item.isCompleted ? 'text-success' : 'text-danger'">
+                      {{item.isCompleted ? 'Completed' : 'Pending'}}
+                    </span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
 
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                }
+      <!-- Show message if no tasks -->
+      <div *ngIf="ListOfNotes.length === 0" class="text-center mt-3">
+        No tasks available.
+      </div>
+  </div>
 
-
-            </tbody>
-        </table>
-    </div>
-
+  <!-- Debug JSON (optional) -->
+  <pre>{{ ListOfNotes | json }}</pre>
 </div>
